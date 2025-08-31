@@ -1,0 +1,201 @@
+﻿@page
+@model Questioning_program.Pages.UserManagement.AddUserModel
+@{
+    ViewData["Title"] = "افزودن کاربر";
+    var userDisplayName = Model.CreateUser;
+    var roleData = ViewData["RoleData"];
+}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>صفحه اضافه کردن کاربر</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-left">
+                        <li class="breadcrumb-item">
+                            <a href="/">خانه</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a asp-page="/UserManagement/IndexUser">لیست کاربران</a>
+                        </li>
+                        <li class="breadcrumb-item active">افزودن کاربر</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <form method="post" enctype="multipart/fom-data" role="form">
+                <div class="row">
+                    <!-- right col -->
+                    <div class="col-md-8">
+                        <!-- general form elements -->
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h3 class="card-title">اطلاعات کاربر</h3>
+                            </div>
+                            <!-- /.card-header -->
+                            <!-- form start -->
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label asp-for="CreateUser.FirstName">@Html.DisplayNameFor(m => userDisplayName.FirstName)</label>
+                                        <input type="text" class="form-control" asp-for="CreateUser.FirstName" placeholder="لطفا نام را وارد کنید" />
+
+                                        <small>
+                                            <span class="text text-danger" asp-validation-for="CreateUser.FirstName"></span>
+                                        </small>
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <label asp-for="CreateUser.LastName">@Html.DisplayNameFor(m => userDisplayName.LastName)</label>
+                                        <input type="text" class="form-control" asp-for="CreateUser.LastName" placeholder="لطفا نام خانوادگی را وارد کنید" />
+
+                                        <small>
+                                            <span class="text text-danger" asp-validation-for="CreateUser.LastName"></span>
+                                        </small>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label asp-for="CreateUser.NationalCode">@Html.DisplayNameFor(m => userDisplayName.NationalCode)</label>
+                                        <input type="text" class="form-control" asp-for="CreateUser.NationalCode" placeholder="کدملی را وارد کنید" />
+
+                                        <small>
+                                            <span class="text text-danger" asp-validation-for="CreateUser.NationalCode"></span>
+                                        </small>
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <label asp-for="CreateUser.PhoneNumber">@Html.DisplayNameFor(m => userDisplayName.PhoneNumber)</label>
+                                        <input type="text" class="form-control" asp-for="CreateUser.PhoneNumber" placeholder="شماره تماس را وارد کنید" />
+
+                                        <small>
+                                            <span class="text text-danger" asp-validation-for="CreateUser.PhoneNumber"></span>
+                                        </small>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="CreateUser.UserName">@Html.DisplayNameFor(m => userDisplayName.UserName)</label>
+                                    <input type="text" class="form-control" asp-for="CreateUser.UserName" placeholder="لطفا نام کاربری را وارد کنید" />
+
+                                    <small>
+                                        <span class="text text-danger" asp-validation-for="CreateUser.UserName"></span>
+                                    </small>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="CreateUser.EmailAddress">@Html.DisplayNameFor(m => userDisplayName.EmailAddress)</label>
+                                    <input type="email" class="form-control" asp-for="CreateUser.EmailAddress" placeholder="ایمیل را وارد کنید">
+
+                                    <small>
+                                        <span class="text text-danger" asp-validation-for="CreateUser.EmailAddress"></span>
+                                    </small>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="CreateUser.Password">@Html.DisplayNameFor(m => userDisplayName.Password)</label>
+                                    <input type="password" class="form-control" asp-for="CreateUser.Password" placeholder="پسورد را وارد کنید">
+
+                                    <small>
+                                        <span class="text text-danger" asp-validation-for="CreateUser.Password"></span>
+                                    </small>
+                                </div>
+
+                                <div class="form-group form-check">
+                                    <input type="checkbox" class="form-check-input" asp-for="CreateUser.IsActive" />
+                                    <label class="form-check-label" asp-for="CreateUser.IsActive">
+                                        @Html.DisplayNameFor(m => userDisplayName.IsActive)
+                                    </label>
+
+                                    <small>
+                                        <span class="text text-danger" asp-validation-for="CreateUser.IsActive"></span>
+                                    </small>
+                                </div>
+
+                                <div class="form-group form-select">
+                                    @if (roleData != null)
+                                    {
+                                        <select class="form-control" asp-for="CreateUser.FkRoleId" asp-items="@(SelectList)roleData">
+                                            <option value="" selected="selected" hidden="hidden">لطفا نقش خود را انتخاب کنید</option>
+                                        </select>
+                                    }
+                                    else
+                                    {
+                                        <select class="form-control">
+                                            <option value="">لیست انتخابی یافت نشد</option>
+                                        </select>
+                                    }
+
+                                    <small>
+                                        <span class="text text-danger" asp-validation-for="CreateUser.FkRoleId"></span>
+                                    </small>
+                                </div>
+
+
+                            </div>
+                            <!-- /.card-body -->
+
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-primary">ثبت اطلاعات</button>
+                            </div>
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                    <!--/ right col -->
+                    <!-- left col -->
+                    <div class="col-md-4">
+                        <!-- card header -->
+                        <div class="card card-info">
+                            <div class="card-header">
+                                <h3 class="card-title">عکس پروفایل کاربر</h3>
+                            </div>
+
+                            <div class="card-body">
+                                <div class="form-group text-center">
+                                    <img id="imgProfile" class="img-thumbnail pull-center img-add-user" src="/WebsiteImage/UserProfileImage/DefaultImage.png" />
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="CreateUser.UserProfileUpload">آپلود عکس دلخواه</label>
+                                    <div class="input-group">
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" asp-for="CreateUser.UserProfileUpload" data-target="#imgProfile">
+                                            <label class="custom-file-label" asp-for="CreateUser.UserProfileUpload">
+                                                @Html.DisplayNameFor(m => userDisplayName.UserProfileUpload)
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <small>
+                                    <span class="text text-danger" asp-validation-for="CreateUser.UserProfileUpload"></span>
+                                </small>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- /left col -->
+                </div>
+                <!-- /.row -->
+            </form>
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+
+@section JavaScriptsSection {
+    <script src="/WebsiteScripts/ImgUploader.js"></script>
+    <script src="/WebsiteScripts/ShowFileNameOnInput.js"></script>
+}

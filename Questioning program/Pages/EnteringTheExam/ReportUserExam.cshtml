@@ -1,0 +1,159 @@
+﻿@page "{examId}/{userId}"
+@using Microsoft.AspNetCore.Html
+@using Questioning_Data_Repositories.StaticValue
+@using Questioning_Data_Repositories.Utitlites.GeneralTools
+@using Questioning_Data_Repositories.ViewModel.AdminPanelVms
+@model Questioning_program.Pages.EnteringTheExam.ReportUserExamModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    @if (User.Identity is { IsAuthenticated: true })
+    {
+        <title>گزارش آزمون + @User.Identity.Name</title>
+    }
+    <link rel="stylesheet" href="/WebsiteCss/report.css" />
+</head>
+
+<body class="page-bg">
+
+    <div class="report-container">
+
+        <!-- نوار بالا با جستجو -->
+        <div class="header">
+            <h1 class="title">@Model.AnswerSheet.FormTitle</h1>
+            <div class="search-bar">
+                <input type="text" placeholder="جستجوی سوال..." class="search-input" />
+                <button class="btn btn-blue">جستجو</button>
+            </div>
+        </div>
+
+        @foreach (var item in Model.AnswerSheet.Questions)
+        {
+            <div class="question-card">
+                <h2 class="question-title">@item.QuestionText</h2>
+
+                @if (item.CorrectAnswer is null)
+                {
+                    <div class="text-black">
+                        <div class="text-box">برای این سوال کلید تصحیح ثبت نشده.</div>
+                    </div>
+                }
+                else if (item.QuestionType == AnswerTypeEnumTypes.TrueOrFalse)
+                {
+                    bool correctIsTrue = item.CorrectAnswer.TrueOrFalseAnswer;
+                    bool? userVal = item.UserSelectedAnswer?.SelectedTrueOrFalse;
+
+                    Func<bool, IHtmlContent> GetLabel = isTrue =>
+                    {
+                        if ((isTrue && correctIsTrue) || (!isTrue && !correctIsTrue))
+                            return new HtmlString("<span class=\"label\">پاسخ صحیح</span>");
+                        else if (userVal.HasValue && userVal.Value == isTrue)
+                            return new HtmlString("<span class=\"label\">پاسخ اشتباه شما</span>");
+                        return HtmlString.Empty;
+                    };
+
+                    <div class="true-false-options">
+                        <div class="true-option @(correctIsTrue ? "correct" : "") @(userVal == true && !correctIsTrue ? "wrong" : "")">
+                            @(correctIsTrue ? "✅ درست" : "❌ غلط") @GetLabel(true)
+                        </div>
+                        <div class="false-option @(!correctIsTrue ? "correct" : "") @(userVal == false && correctIsTrue ? "wrong" : "")">
+                            @(!correctIsTrue ? "✅ درست" : "❌ غلط") @GetLabel(false)
+                        </div>
+                    </div>
+                }
+                else if (item.QuestionType == AnswerTypeEnumTypes.Test)
+                {
+                    <ul class="option-list">
+                        @{
+                            // شناسه‌ها را استاندارد 1..4 می‌گیریم
+                            var options = new List<(string Text, string Id)>
+                            {
+                                (item.CorrectAnswer.OptionOne,   "1"),
+                                (item.CorrectAnswer.OptionTwo,   "2"),
+                                (item.CorrectAnswer.OptionThree, "3"),
+                                (item.CorrectAnswer.OptionFour,  "4")
+                            };
+
+                            // var correctId = item.CorrectAnswer.CorrectOption?.Trim(); // الان از سرویس نرمال‌شده است
+                            var userSel   = item.UserSelectedAnswer?.SelectedOption?.Trim(); // نرمال‌شده است
+
+                            var correctId = OptionNormalizer.NormalizeOptionId(item.CorrectAnswer.CorrectOption) 
+                                            ?? item.CorrectAnswer.CorrectOption?.Trim();
+
+                            // var userSel = OptionNormalizer.NormalizeOptionId(item.UserSelectedAnswer?.SelectedOption) 
+                            //               ?? item.UserSelectedAnswer?.SelectedOption?.Trim();
+                        }
+
+                        @foreach (var option in options)
+                        {
+                            if (string.IsNullOrWhiteSpace(option.Text))
+                                continue;
+
+                            // اگر به هر دلیل userSel یا correctId نال بود، یک fallback با مقایسه‌ی متن گزینه داریم
+                            @* bool isCorrect = string.Equals(option.Id, correctId, StringComparison.OrdinalIgnoreCase) ||
+                                             string.Equals(option.Text?.Trim(), item.CorrectAnswer?.AnswerText?.Trim(), StringComparison.OrdinalIgnoreCase); *@
+
+                            bool isCorrect = string.Equals(option.Id, correctId, StringComparison.OrdinalIgnoreCase) ||
+                                             string.Equals(option.Text?.Trim(), correctId, StringComparison.OrdinalIgnoreCase);
+
+                            bool isUserSelected = string.Equals(option.Id, userSel, StringComparison.OrdinalIgnoreCase) ||
+                                                  string.Equals(option.Text?.Trim(), userSel, StringComparison.OrdinalIgnoreCase);
+
+                            <li class="option @(isCorrect ? "correct" : (isUserSelected && !isCorrect ? "wrong" : ""))">
+                                <span class="icon @(isCorrect ? "success" : (isUserSelected && !isCorrect ? "error" : ""))"></span>
+                                @option.Text
+                                @if (isCorrect)
+                                {
+                                    <span class="label">پاسخ صحیح</span>
+                                }
+                                else if (isUserSelected && !isCorrect)
+                                {
+                                    <span class="label">پاسخ اشتباه شما</span>
+                                }
+                            </li>
+                        }
+                    </ul>
+                }
+
+                else if (item.QuestionType == AnswerTypeEnumTypes.Anatomical)
+                {
+                    bool isCorrect = string.Equals(
+                    item.UserSelectedAnswer?.DescriptiveAnswerText?.Trim(),
+                    item.CorrectAnswer.AnswerText?.Trim(),
+                    StringComparison.OrdinalIgnoreCase
+                    );
+
+                    <div class="text-block">
+                        <label>پاسخ شما:</label>
+                        <div class="text-box @(isCorrect ? "correct-box" : "wrong-box")">
+                            @item.UserSelectedAnswer?.DescriptiveAnswerText
+                        </div>
+                    </div>
+
+                    <div class="text-block">
+                        <label>پاسخ صحیح / کلید تصحیح:</label>
+                        <div class="text-box correct-box">
+                            @item.CorrectAnswer.AnswerText
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+
+        <!-- دکمه‌ها -->
+        <div class="actions">
+            <button class="btn btn-gray">بازگشت به آزمون</button>
+            <button class="btn btn-blue">چاپ گزارش</button>
+        </div>
+
+    </div>
+</body>
+
+</html>

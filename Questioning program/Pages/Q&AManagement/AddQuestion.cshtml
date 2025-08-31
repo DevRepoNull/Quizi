@@ -1,0 +1,171 @@
+﻿@page
+@model Questioning_program.Pages.Q_AManagement.AddQuestionModel
+@{
+    ViewData["Title"] = "افزودن سوال و جواب";
+    var createQue = Model.CreateQuestion;
+    var answerData = ViewData["AnswerData"];
+}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>صفحه اضافه کردن سوال و جواب</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-left">
+                        <li class="breadcrumb-item">
+                            <a href="/">خانه</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a asp-page="/Q&AManagement/IndexQuestion">لیست سوال ها</a>
+                        </li>
+                        <li class="breadcrumb-item active">افزودن سوال و جواب</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <form method="post" role="form">
+                <div class="row">
+                    <!-- right col -->
+                    <div class="col-md-12">
+                        <!-- general form elements -->
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h3 class="card-title">اطلاعات سوال و جواب</h3>
+                            </div>
+                            <!-- /.card-header -->
+                            <!-- form start -->
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label asp-for="CreateQuestion.QuestionText">@Html.DisplayNameFor(m => createQue.QuestionText)</label>
+                                    <input type="text" class="form-control" asp-for="CreateQuestion.QuestionText" placeholder="لطفا سوال را وارد کنید" />
+                                    
+                                    <small>
+                                        <span class="text text-danger" asp-validation-for="CreateQuestion.QuestionText"></span>
+                                    </small>
+                                </div>
+
+                                <div class="form-group form-select">
+                                    @if (answerData != null)
+                                    {
+                                        <select class="form-control" asp-for="CreateQuestion.AnswerType" asp-items="(SelectList)answerData" id="answerTypeSelect">
+                                            <option value="" selected="selected" hidden="hidden">لطفا نوع جواب را انتخاب کنید</option>
+                                        </select>
+                                    }
+                                    else
+                                    {
+                                        <select class="form-control">
+                                            <option value="">لیست انتخابی یافت نشد</option>
+                                        </select>
+                                    }
+                                    
+                                    <small>
+                                        <span class="text text-danger" asp-validation-for="CreateQuestion.AnswerType"></span>
+                                    </small>
+                                </div>
+
+                                <div id="testOptions" style="display:none;">
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label asp-for="CreateQuestion.TestOptionOne">@Html.DisplayNameFor(m => createQue.TestOptionOne)</label>
+                                            <input type="text" class="form-control" asp-for="CreateQuestion.TestOptionOne" placeholder="جواب اول را وارد کنید" />
+                                            
+                                            <small>
+                                                <span asp-validation-for="CreateQuestion.TestOptionOne" class="text text-danger"></span>
+                                            </small>
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <label asp-for="CreateQuestion.TestOptionTwo">@Html.DisplayNameFor(m => createQue.TestOptionTwo)</label>
+                                            <input type="text" class="form-control" asp-for="CreateQuestion.TestOptionTwo" placeholder="جواب دوم را وارد کنید" />
+                                            
+                                            <small>
+                                                <span asp-validation-for="CreateQuestion.TestOptionTwo" class="text text-danger"></span>
+                                            </small>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label asp-for="CreateQuestion.TestOptionThree">@Html.DisplayNameFor(m => createQue.TestOptionThree)</label>
+                                            <input type="text" class="form-control" asp-for="CreateQuestion.TestOptionThree" placeholder="جواب سوم را وارد کنید" />
+                                            
+                                            <small>
+                                                <span asp-validation-for="CreateQuestion.TestOptionThree" class="text text-danger"></span>
+                                            </small>
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <label asp-for="CreateQuestion.TestOptionThree">@Html.DisplayNameFor(m => createQue.TestOptionFour)</label>
+                                            <input type="text" class="form-control" asp-for="CreateQuestion.TestOptionFour" placeholder="جواب چهارم را وارد کنید" />
+                                            
+                                            <small>
+                                                <span asp-validation-for="CreateQuestion.TestOptionFour" class="text text-danger"></span>
+                                            </small>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label asp-for="CreateQuestion.TestCorrectionOption">@Html.DisplayNameFor(m => createQue.TestCorrectionOption)</label>
+                                        <input type="text" class="form-control" asp-for="CreateQuestion.TestCorrectionOption" placeholder="جواب درست را وارد کنید" />
+                                        
+                                        <small>
+                                            <span asp-validation-for="CreateQuestion.TestCorrectionOption" class="text text-danger"></span>
+                                        </small>
+                                    </div>
+                                </div>
+
+                                <div id="trueFalseOption" style="display:none;">
+                                    <div class="form-group">
+                                        <label asp-for="CreateQuestion.TrueOrFalseAnswer">@Html.DisplayNameFor(m => createQue.TrueOrFalseAnswer)</label>
+                                        <div class="form-check">
+                                            @Html.RadioButtonFor(m => createQue.TrueOrFalseAnswer, true, new { @class = "form-check-input", id = "True" })
+                                            <label class="form-check-label" for="True">درست</label>
+                                        </div>
+                                        <div class="form-check">
+                                            @Html.RadioButtonFor(m => createQue.TrueOrFalseAnswer, false, new { @class = "form-check-input", id = "False" })
+                                            <label class="form-check-label" for="False">غلط</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="textAnswerOption" style="display:none;">
+                                    <div class="form-group">
+                                        <label asp-for="CreateQuestion.AnswerText">@Html.DisplayNameFor(m => createQue.AnswerText)</label>
+                                        <textarea class="form-control" rows="3" asp-for="CreateQuestion.AnswerText" placeholder="لطفا جواب تشریحی را وارد کنید"></textarea>
+                                        
+                                        <small>
+                                            <span class="text text-danger" asp-validation-for="CreateQuestion.AnswerText"></span>
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.card-body -->
+
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-primary">ثبت اطلاعات</button>
+                            </div>
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                    <!--/ right col -->
+                </div>
+                <!-- /.row -->
+            </form>
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+@section JavaScriptsSection
+{
+    <script src="/WebsiteScripts/ComponentSelection.js"></script>
+}

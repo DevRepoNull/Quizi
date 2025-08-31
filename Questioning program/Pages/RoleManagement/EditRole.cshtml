@@ -1,0 +1,94 @@
+﻿@page "{roleId}"
+@model Questioning_program.Pages.RoleManagement.EditRoleModel
+@{
+    ViewData["Title"] = "ویرایش نقش";
+    var roleName = Model.EditRole;
+}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>صفحه ویرایش کردن نقش</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-left">
+                        <li class="breadcrumb-item">
+                            <a href="/">خانه</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a asp-page="/RoleManagement/IndexRole">لیست نقش ها</a>
+                        </li>
+                        <li class="breadcrumb-item active">ویرایش نقش</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <form method="post" role="form">
+                <input type="hidden" asp-for="EditRole.RoleId" />
+                @Html.AntiForgeryToken()
+                <div class="row">
+                    <!-- right col -->
+                    <div class="col-md-12">
+                        <!-- general form elements -->
+                        <div class="card card-warning">
+                            <div class="card-header">
+                                <h3 class="card-title">اطلاعات نقش</h3>
+                            </div>
+                            <!-- /.card-header -->
+                            <!-- form start -->
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label asp-for="EditRole.RoleName">@Html.DisplayNameFor(m => roleName.RoleName)</label>
+                                    <input type="text" class="form-control" asp-for="EditRole.RoleName" placeholder="لطفا نام نقش را وارد کنید" />
+                                    
+                                    <small>
+                                        <span class="text text-danger" asp-validation-for="EditRole.RoleName"></span>
+                                    </small>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="EditRole.RoleDescription">@Html.DisplayNameFor(m => roleName.RoleDescription)</label>
+                                    <textarea rows="3" class="form-control" asp-for="EditRole.RoleDescription"></textarea>
+                                    
+                                    <small>
+                                        <span class="text text-danger" asp-validation-for="EditRole.RoleDescription"></span>
+                                    </small>
+                                </div>
+
+                                <div class="form-group form-check">
+                                    <input type="checkbox" class="form-check-input" asp-for="EditRole.RoleActive" />
+                                    <label class="form-check-label" asp-for="EditRole.RoleActive">
+                                        @Html.DisplayNameFor(m => roleName.RoleActive)
+                                    </label>
+                                    
+                                    <small>
+                                        <span class="text text-danger" asp-validation-for="EditRole.RoleActive"></span>
+                                    </small>
+                                </div>
+
+                            </div>
+                            <!-- /.card-body -->
+
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-warning">ویرایش اطلاعات</button>
+                            </div>
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                    <!--/ right col -->
+                </div>
+                <!-- /.row -->
+            </form>
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>

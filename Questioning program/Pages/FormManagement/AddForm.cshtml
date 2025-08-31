@@ -1,0 +1,255 @@
+﻿@page
+@using Questioning_Data_Repositories.StaticValue
+@model Questioning_program.Pages.FormManagement.AddFormModel
+@{
+    ViewData["Title"] = "ایجاد فرم آزمون";
+    var createForm = Model.CreateForm;
+    var categoryData = ViewData["CategoryData"];
+}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>افزودن فرم امتحان جدید</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-left">
+                        <li class="breadcrumb-item"><a href="/">خانه</a></li>
+                        <li class="breadcrumb-item"><a href="/FormManagement/IndexForm">لیست فرم‌ها</a></li>
+                        <li class="breadcrumb-item active">افزودن فرم</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <form method="post" role="form">
+                <div class="row">
+                    <!-- بخش اطلاعات فرم -->
+                    <div class="col-md-12">
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h3 class="card-title">اطلاعات فرم</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label asp-for="CreateForm.FormTitle">@Html.DisplayNameFor(m => createForm.FormTitle)</label>
+                                    <input type="text" class="form-control" asp-for="CreateForm.FormTitle" placeholder="عنوان فرم را وارد کنید">
+
+                                    <small>
+                                        <span asp-validation-for="CreateForm.FormTitle" class="text text-danger"></span>
+                                    </small>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="CreateForm.FormDescription">@Html.DisplayNameFor(m => createForm.FormDescription)</label>
+                                    <textarea class="form-control" asp-for="CreateForm.FormDescription" placeholder="توضیحات فرم"></textarea>
+
+                                    <small>
+                                        <span asp-validation-for="CreateForm.FormDescription" class="text text-danger"></span>
+                                    </small>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="CreateForm.FormDescription">@Html.DisplayNameFor(m => createForm.AccessCode)</label>
+                                    <input class="form-control" asp-for="CreateForm.AccessCode" placeholder="کد شناسایی را وارد کنید" />
+
+                                    <small>
+                                        <span asp-validation-for="CreateForm.AccessCode" class="text text-danger"></span>
+                                    </small>
+                                </div>
+
+                                <div class="form-group form-select">
+                                    @if (categoryData != null)
+                                    {
+                                        <select class="form-control" asp-for="CreateForm.FkCategoryId" asp-items="@(SelectList)categoryData">
+                                            <option value="" selected="selected" hidden="hidden">لطفا دسته بندی خود را انتخاب کنید</option>
+                                        </select>
+                                    }
+                                    else
+                                    {
+                                        <select class="form-control">
+                                            <option value="">لیست انتخابی یافت نشد</option>
+                                        </select>
+                                    }
+
+                                    <small>
+                                        <span class="text text-danger" asp-validation-for="CreateForm.FkCategoryId"></span>
+                                    </small>
+                                </div>
+
+                                <div class="form-group form-check">
+                                    <input asp-for="CreateForm.IsActive" type="checkbox" class="form-check-input">
+                                    <label class="form-check-label" asp-for="CreateForm.IsActive">@Html.DisplayNameFor(m => createForm.IsActive)</label>
+
+                                    <small>
+                                        <span asp-validation-for="CreateForm.IsActive" class="text text-danger"></span>
+                                    </small>
+                                </div>
+
+                                <div class="form-group form-check">
+                                    <input asp-for="CreateForm.IsPublic" type="checkbox" class="form-check-input">
+                                    <label class="form-check-label" asp-for="CreateForm.IsPublic">@Html.DisplayNameFor(m => createForm.IsPublic)</label>
+
+                                    <small>
+                                        <span asp-validation-for="CreateForm.IsPublic" class="text text-danger"></span>
+                                    </small>
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group col-md-3">
+                                        <input data-jdp data-jdp-only-time type="text" class="form-control" placeholder="ساعت شروع آزمون" asp-for="CreateForm.StartExamTime" />
+
+                                        <small>
+                                            <span asp-validation-for="CreateForm.StartExamTime" class="text text-danger"></span>
+                                        </small>
+                                    </div>
+
+                                    <div class="form-group col-md-3">
+                                        <input data-jdp data-jdp-only-time type="text" class="form-control" placeholder="ساعت پایان آزمون" asp-for="CreateForm.EndExamTime" />
+
+                                        <small>
+                                            <span asp-validation-for="CreateForm.EndExamTime" class="text text-danger"></span>
+                                        </small>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group col-md-3">
+                                        <input data-jdp data-jdp-only-date type="text" class="form-control" placeholder="تاریخ شروع آزمون" asp-for="CreateForm.StartExamDate" />
+
+                                        <small>
+                                            <span asp-validation-for="CreateForm.StartExamDate" class="text text-danger"></span>
+                                        </small>
+                                    </div>
+
+                                    <div class="form-group col-md-3">
+                                        <input data-jdp data-jdp-only-date type="text" class="form-control" placeholder="تاریخ پایان آزمون" asp-for="CreateForm.EndExamDate" />
+                                        <small>
+                                            <span asp-validation-for="CreateForm.EndExamDate" class="text text-danger"></span>
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-primary">✔️ ثبت نهایی فرم آزمون</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <!-- سوالات موجود -->
+                    <div class="col-md-4">
+                        <div class="card card-info">
+                            <div class="card-header">
+                                <h3 class="card-title">📚 سوالات فرم</h3>
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-group" id="questionList">
+                                    @foreach (var q in createForm.Questions)
+                                    {
+                                        var answerData = q.Answers.FirstOrDefault();
+                                        if (answerData == null) { continue; } // هندل بدون جواب
+
+                                        <li class="list-group-item" draggable="true" data-question="true" data-question-id="@q.QuestionId" data-order="@@counter">
+                                            <button type="button" class="btn btn-link btn-sm text-danger delete-btn" style="float: left; font-size: 1.2rem;">×</button>
+                                            <div style="margin-left: 30px;">
+                                                <h6>@q.QuestionText</h6>
+
+                                                @switch (answerData.AnswerTypes)
+                                                {
+                                                    case AnswerTypeEnumTypes.Anatomical:
+                                                        <span class="badge badge-primary">تشریحی</span>
+                                                        <textarea class="form-control mt-2" name="Answers[@q.QuestionId]">@(answerData.AnswerText)</textarea>
+                                                        @* <input type="hidden" name="CreateForm.SelectedQuestions" value="@q.QuestionId" /> *@
+                                                        break;
+
+                                                    case AnswerTypeEnumTypes.Test:
+                                                        <span class="badge badge-success">تستی</span>
+                                                        <ul class="list-group mt-2">
+                                                            <li class="list-group-item">
+                                                                <input type="radio" name="@q.QuestionId" value="@answerData.TestOptionOne" @(answerData.TestCorrectOption == answerData.TestOptionOne ? "checked" : "") />
+                                                                @answerData.TestOptionOne
+                                                                @* <input type="hidden" name="CreateForm.SelectedQuestions" value="@q.QuestionId" /> *@
+                                                            </li>
+                                                            <li class="list-group-item">
+                                                                <input type="radio" name="@q.QuestionId" value="@answerData.TestOptionTwo" @(answerData.TestCorrectOption == answerData.TestOptionTwo ? "checked" : "") />
+                                                                @answerData.TestOptionTwo
+                                                                @* <input type="hidden" name="CreateForm.SelectedQuestions" value="@q.QuestionId" /> *@
+                                                            </li>
+                                                            <li class="list-group-item">
+                                                                <input type="radio" name="@q.QuestionId" value="@answerData.TestOptionThree" @(answerData.TestCorrectOption == answerData.TestOptionThree ? "checked" : "") />
+                                                                @answerData.TestOptionThree
+                                                                @* <input type="hidden" name="CreateForm.SelectedQuestions" value="@q.QuestionId" /> *@
+                                                            </li>
+                                                            <li class="list-group-item">
+                                                                <input type="radio" name="@q.QuestionId" value="@answerData.TestOptionFour" @(answerData.TestCorrectOption == answerData.TestOptionFour ? "checked" : "") />
+                                                                @answerData.TestOptionFour
+                                                                @* <input type="hidden" name="CreateForm.SelectedQuestions" value="@q.QuestionId" /> *@
+                                                            </li>
+                                                        </ul>
+                                                        break;
+
+                                                    case AnswerTypeEnumTypes.TrueOrFalse:
+                                                        <span class="badge badge-warning">درست/غلط</span>
+                                                        <div class="form-check mt-2">
+                                                            <input type="radio" name="@q.QuestionId" value="true" @(answerData.TruOrFalseAnswer == true ? "checked" : "") />
+                                                            <label>صحیح</label>
+                                                            @* <input type="hidden" name="CreateForm.SelectedQuestions" value="@q.QuestionId" /> *@
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input type="radio" name="@q.QuestionId" value="false" @(answerData.TruOrFalseAnswer == false ? "checked" : "") />
+                                                            <label>غلط</label>
+                                                            @* <input type="hidden" name="CreateForm.SelectedQuestions" value="@q.QuestionId" /> *@
+                                                        </div>
+                                                        break;
+                                                }
+
+                                                @* <button type="button" class="btn btn-danger btn-sm mt-2 delete-btn">🗑️ حذف</button> *@
+                                            </div>
+                                        </li>
+                                    }
+                                </ul>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- طراحی برگه آزمون -->
+                    <div class="col-md-8">
+                        <div class="card card-success">
+                            <div class="card-header">
+                                <h3 class="card-title">📝 طراحی برگه آزمون</h3>
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-group" id="examDesign">
+                                    <li class="list-group-item text-center text-muted">سوالی اضافه نشده است</li>
+                                </ul>
+                            </div>
+                            @* <div class="card-footer text-center">
+                                <button type="button" class="btn btn-success">✔️ ثبت نهایی فرم آزمون</button>
+                            </div> *@
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+</div>
+
+@section JavaScriptsSection
+{
+    <script src="/WebsiteScripts/DragDropQuestion.js"></script>
+    <script>
+        jalaliDatepicker.startWatch({ time: true });
+    </script>
+}

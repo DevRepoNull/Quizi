@@ -1,0 +1,167 @@
+﻿@page
+@using Questioning_Data_Repositories.Utitlites.GeneralTools
+@using Questioning_Data_Repositories.ViewModel.AdminPanelVms
+@model Questioning_program.Pages.UserManagement.UserListModel
+@{
+    ViewData["Title"] = "لیست کاربران";
+}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>لیست کاربران</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-left">
+                        <li class="breadcrumb-item"><a href="/">خانه</a></li>
+                        <li class="breadcrumb-item active">لیست کاربران</li>
+                    </ol>
+                </div>
+                <div class="col-sm-6">
+                    <br />
+                    <a class="btn btn-success" asp-page="/UserManagement/AddUser">افزودن کاربر</a>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-12">
+                    @if (Model.UserLists != null && Model.UserLists.Any())
+                    {
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">اطلاعات کاربران</h3>
+
+                                <div class="card-tools">
+                                    <div class="input-group input-group-sm" style="width: 150px;">
+                                        <input type="text" name="table_search" class="form-control float-right" placeholder="جستجو">
+
+                                        <div class="input-group-append">
+                                            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body table-responsive p-0">
+                                <table class="table table-hover">
+                                    <tr>
+                                        @{
+                                            var firstUser = Model.UserLists.FirstOrDefault() ?? new UserListFromAdminPanelViewModel();
+                                        }
+                                        <th>@Html.DisplayNameFor(m => firstUser.ProfileImageName)</th>
+                                        <th>@Html.DisplayNameFor(m => firstUser.FirstName)</th>
+                                        <th>@Html.DisplayNameFor(m => firstUser.LastName)</th>
+                                        <th>@Html.DisplayNameFor(m => firstUser.UserName)</th>
+                                        <th>@Html.DisplayNameFor(m => firstUser.EmailAddress)</th>
+                                        <th>@Html.DisplayNameFor(m => firstUser.NationalCode)</th>
+                                        <th>@Html.DisplayNameFor(m => firstUser.PhoneNumber)</th>
+                                        <th>@Html.DisplayNameFor(m => firstUser.RolTitle)</th>
+                                        <th>@Html.DisplayNameFor(m => firstUser.IsActive)</th>
+                                        <th>دستورات</th>
+                                    </tr>
+                                    @foreach (var item in Model.UserLists)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <img src="/WebsiteImage/UserProfileImage/@item.ProfileImageName" class="img-thumbnail img-records" />
+                                            </td>
+                                            <td>@item.FirstName</td>
+                                            <td>@item.LastName</td>
+                                            <td>@item.UserName</td>
+                                            <td>@FixedText.FixedEmail(item.EmailAddress)</td>
+                                            <td>@item.NationalCode</td>
+                                            <td>@item.PhoneNumber</td>
+                                            <td>@item.RolTitle</td>
+                                            <td>
+                                                @if (item.IsActive)
+                                                {
+                                                    <span class="badge badge-success">فعال</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge badge-danger">غیرفعال</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-sm btn-info" asp-page="/UserManagement/EditUser" asp-route-userId="@item.UserId">ویرایش کاربر</a>
+                                                <form id="deleteForm-@item.UserId" method="post" asp-page-handler="Delete" asp-route-userId="@item.UserId" class="d-inline">
+                                                    @* <a class="btn btn-sm btn-danger" asp-page="/UserManagement/DeleteUser">حذف کاربر</a> *@
+                                                    <button type="button" class="btn btn-sm btn-danger" onclick="confirmDelete('@item.UserId')">حذف کاربر</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    }
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                            <!-- /.card-body -->
+                            <div class="card-footer clearfix">
+                                <ul class="pagination pagination-sm m-0 float-right">
+                                    <li class="page-item"><a class="page-link" href="#">«</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">۱</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">۲</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">۳</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">»</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- /.card -->
+                    }
+                    else
+                    {
+                        <div class="alert alert-danger">
+                            <p class="text text-center">در حال حاضر کاربری ثبت نشده است</p>
+                        </div>
+                    }
+                </div>
+            </div>
+            <!-- /.row -->
+
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+
+@section JavaScriptsSection
+{
+    <script>
+        function confirmDelete(userId) {
+            SwalHelper.showConfirm(
+                'آیا مطمئن هستید؟',
+                'این عملیات قابل بازگشت نیست.',
+                'بله حذف کن',
+                'خیر',
+                function () {
+                    // عملیات حذف
+                    document.getElementById('deleteForm-' + userId).submit();
+                });
+        }
+    </script>
+
+    <script>
+        $(document).ready(function(){
+            @if (TempData["SuccessMessage"] != null)
+            {
+                    <text>
+                        SwalHelper.showSuccess('@TempData["SuccessMessage"]');
+                    </text>
+            }
+            @if (TempData["ErrorMessage"] != null)
+            {
+                    <text>
+                        SwalHelper.showError('@TempData["ErrorMessage"]');
+                    </text>
+            }
+        });
+    </script>
+}

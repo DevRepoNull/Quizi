@@ -1,0 +1,169 @@
+﻿@page
+@using Questioning_Data_Repositories.ViewModel.AdminPanelVms
+@model Questioning_program.Pages.RoleManagement.IndexRoleModel
+@{
+    ViewData["Title"] = "لیست نقش ها";
+    var firstRole = Model.RoleList.FirstOrDefault() ?? new RoleListFromAdminPanelViewModel();
+}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>لیست نقش ها</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-left">
+                        <li class="breadcrumb-item"><a href="/">خانه</a></li>
+                        <li class="breadcrumb-item active">لیست نقش ها</li>
+                    </ol>
+                </div>
+
+                @*   @if (TempData["SuccessMessage"] != null)
+                {
+                    <div class="alert alert-success">
+                        @TempData["SuccessMessage"]
+                    </div>
+                }
+
+                @if (TempData["ErrorMessage"] != null)
+                {
+                    <div class="alert alert-danger">
+                        @TempData["ErrorMessage"]
+                    </div>
+                } *@
+                <div class="col-sm-6">
+                    <br />
+                    <a class="btn btn-success" asp-page="/RoleManagement/AddRole">افزودن نقش</a>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-12">
+                    @if (Model.RoleList != null && Model.RoleList.Any())
+                    {
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">اطلاعات نقش ها</h3>
+
+                                <div class="card-tools">
+                                    <div class="input-group input-group-sm" style="width: 150px;">
+                                        <input type="text" name="table_search" class="form-control float-right" placeholder="جستجو">
+
+                                        <div class="input-group-append">
+                                            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body table-responsive p-0">
+                                <table class="table table-hover">
+                                    <tr>
+                                        <th>@Html.DisplayNameFor(m => firstRole.RoleName)</th>
+                                        <th>@Html.DisplayNameFor(m => firstRole.RoleDescription)</th>
+                                        <th>@Html.DisplayNameFor(m => firstRole.RolActive)</th>
+                                        <th>دستورات</th>
+                                    </tr>
+                                    @foreach (var item in Model.RoleList)
+                                    {
+                                        <tr>
+                                            <td>@item.RoleName</td>
+                                            <td>@item.RoleDescription</td>
+                                            <td>
+                                                @if (item.RolActive)
+                                                {
+                                                    <span class="badge badge-success">فعال</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge badge-danger">غیرفعال</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-sm btn-info" asp-page="/RoleManagement/EditRole" asp-route-roleId="@item.RoleId">ویرایش نقش</a>
+                                                <form id="deleteForm-@item.RoleId" method="post" asp-page-handler="Delete" asp-route-roleId="@item.RoleId" class="d-inline">
+                                                    <button type="button" class="btn btn-sm btn-danger" onclick="confirmDelete('@item.RoleId')">حذف نقش</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    }
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                    }
+                    else
+                    {
+                        <div class="alert alert-danger">
+                            <p class="text text-center">در حال حاضر نقشی ثبت نشده است</p>
+                        </div>
+                    }
+                </div>
+            </div>
+            <!-- /.row -->
+
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+@section JavaScriptsSection
+{
+    <script>
+        // function confirmDelete(roleId) {
+        //     Swal.fire({
+        //         title: 'آیا مطمئن هستید؟',
+        //         text: "این عملیات قابل بازگشت نیست!",
+        //         icon: 'warning',
+        //         showCancelButton: true,
+        //         confirmButtonColor: '#3085d6',
+        //         cancelButtonColor: '#d33',
+        //         confirmButtonText: 'بله، حذف کن!',
+        //         cancelButtonText: 'لغو'
+        //     }).then((result) => {
+        //         if (result.isConfirmed) {
+        //             document.getElementById('deleteForm-' + roleId).submit();
+        //         }
+        //     });
+        // }
+
+        function confirmDelete(roleId) {
+            SwalHelper.showConfirm(
+                'آیا مطمئن هستید؟',
+                'این عملیات قابل بازگشت نیست.',
+                'بله حذف کن',
+                'خیر',
+                function () {
+                    // عملیات حذف
+                    document.getElementById('deleteForm-' + roleId).submit();
+                });
+        }
+    </script>
+
+    <script>
+        $(document).ready(function(){
+            @if (TempData["SuccessMessage"] != null)
+            {
+                            <text>
+                                SwalHelper.showSuccess('@TempData["SuccessMessage"]');
+                            </text>
+            }
+            @if (TempData["ErrorMessage"] != null)
+            {
+                            <text>
+                                SwalHelper.showError('@TempData["ErrorMessage"]');
+                            </text>
+            }
+        });
+    </script>
+}

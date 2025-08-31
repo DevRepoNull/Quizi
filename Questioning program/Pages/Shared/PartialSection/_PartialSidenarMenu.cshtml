@@ -1,0 +1,118 @@
+﻿<!-- Sidebar -->
+<div class="sidebar">
+    <div>
+        <!-- Sidebar user panel (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            @if (User.Identity is { IsAuthenticated: true })
+            {
+                var firstName = User.Claims.FirstOrDefault(c => c.Type == "FirstName")?.Value;
+                var lastName = User.Claims.FirstOrDefault(c => c.Type == "LastName")?.Value;
+                var profileImage = User.Claims.FirstOrDefault(c => c.Type == "ProfileImage")?.Value ?? "DefaultImage.png";
+
+                <div class="image">
+                    <img src="/WebsiteImage/UserProfileImage/@profileImage" class="img-circle elevation-2" alt="User Image">
+                </div>
+
+                <div class="info">
+                    <a href="#" class="d-block">@firstName @lastName</a>
+                </div>
+            }
+        </div>
+
+        <!-- Sidebar Menu -->
+
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
+                <li class="nav-item has-treeview menu-open">
+                    <a href="#" class="nav-link active">
+                        <i class="nav-icon fa fa-users"></i>
+                        <p>
+                            کاربران و نقش ها
+                            <i class="right fa fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/UserManagement/IndexUser" class="nav-link">
+                                <i class="fa fa-circle-o nav-icon"></i>
+                                <p>لیست کاربران</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/RoleManagement/IndexRole" class="nav-link">
+                                <i class="fa fa-circle-o nav-icon"></i>
+                                <p>لیست نقش ها</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fa fa-question"></i>
+                        <p>
+                            سوال ها و جواب ها
+                            <i class="right fa fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/Q&AManagement/IndexQuestion" class="nav-link">
+                                <i class="fa fa-circle-o nav-icon"></i>
+                                <p>لیست سوالات</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/CategoryManagement/IndexCategory" class="nav-link">
+                                <i class="fa fa-circle-o nav-icon"></i>
+                                <p>لیست دسته بندی ها</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fa fa-file-text"></i>
+                        <p>
+                            فرم ها
+                            <i class="fa fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/FormManagement/IndexForm" class="nav-link">
+                                <i class="fa fa-circle-o nav-icon"></i>
+                                <p>لیست فرم ها</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                @if (User.Identity is { IsAuthenticated: true })
+                {
+                    <li class="nav-item has-treeview">
+                        <a href="/EnteringTheExam/ExamListIndex/" class="nav-link">
+                            <i class="nav-icon fa fa-book"></i>
+                            <p>
+                                ورود به امتحان
+                            </p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item has-treeview">
+                        <a href="/Index?handler=LogOut" class="nav-link">
+                            <i class="nav-icon fa fa-sign-out"></i>
+                            <p>
+                                خروج از حساب کاربری
+                            </p>
+                        </a>
+                    </li>
+                }
+            </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+    </div>
+</div>
+<!-- /.sidebar -->
