@@ -1,17 +1,3 @@
 <Solution>
-  <Folder Name="/Application/">
-    <Project Path="Quizi.Application/Quizi.Application.csproj" />
-  </Folder>
-  <Folder Name="/Domain/">
-    <Project Path="Quizi.Domain/Quizi.Domain.csproj" />
-  </Folder>
-  <Folder Name="/Infrastructure.Data/">
-    <Project Path="Quizi.Infra.Data/Quizi.Infra.Data.csproj" />
-  </Folder>
-  <Folder Name="/Infrastructure.IOC/">
-    <Project Path="Quizi.Infra.IOC/Quizi.Infra.IOC.csproj" />
-  </Folder>
-  <Folder Name="/Presentation/">
-    <Project Path="Quizi.Web/Quizi.Web.csproj" />
-  </Folder>
+  <Project Path="Quizi.Web/Quizi.Web.csproj" Id="f631900d-3248-48a6-afe2-f4dcf1025e73" />
 </Solution>
