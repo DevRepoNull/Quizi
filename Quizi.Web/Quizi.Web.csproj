@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Folder Include="Models\Exam\" />
-    <Folder Include="Models\Authentication\" />
   </ItemGroup>
 
 </Project>

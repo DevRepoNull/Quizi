@@ -1,12 +1,71 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\Real Project\\Quizi\\",
-  "Documents": [],
+  "WorkspaceRootPath": "D:\\Quizi\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{F631900D-3248-48A6-AFE2-F4DCF1025E73}|Quizi.Web\\Quizi.Web.csproj|d:\\quizi\\quizi.web\\models\\authentication\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F631900D-3248-48A6-AFE2-F4DCF1025E73}|Quizi.Web\\Quizi.Web.csproj|solutionrelative:quizi.web\\models\\authentication\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F631900D-3248-48A6-AFE2-F4DCF1025E73}|Quizi.Web\\Quizi.Web.csproj|d:\\quizi\\quizi.web\\models\\authentication\\permission.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F631900D-3248-48A6-AFE2-F4DCF1025E73}|Quizi.Web\\Quizi.Web.csproj|solutionrelative:quizi.web\\models\\authentication\\permission.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F631900D-3248-48A6-AFE2-F4DCF1025E73}|Quizi.Web\\Quizi.Web.csproj|d:\\quizi\\quizi.web\\models\\authentication\\role.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F631900D-3248-48A6-AFE2-F4DCF1025E73}|Quizi.Web\\Quizi.Web.csproj|solutionrelative:quizi.web\\models\\authentication\\role.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Permission.cs",
+              "DocumentMoniker": "D:\\Quizi\\Quizi.Web\\Models\\Authentication\\Permission.cs",
+              "RelativeDocumentMoniker": "Quizi.Web\\Models\\Authentication\\Permission.cs",
+              "ToolTip": "D:\\Quizi\\Quizi.Web\\Models\\Authentication\\Permission.cs",
+              "RelativeToolTip": "Quizi.Web\\Models\\Authentication\\Permission.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAzAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-15T15:47:57.068Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Role.cs",
+              "DocumentMoniker": "D:\\Quizi\\Quizi.Web\\Models\\Authentication\\Role.cs",
+              "RelativeDocumentMoniker": "Quizi.Web\\Models\\Authentication\\Role.cs",
+              "ToolTip": "D:\\Quizi\\Quizi.Web\\Models\\Authentication\\Role.cs",
+              "RelativeToolTip": "Quizi.Web\\Models\\Authentication\\Role.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-15T15:42:46.486Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "User.cs",
+              "DocumentMoniker": "D:\\Quizi\\Quizi.Web\\Models\\Authentication\\User.cs",
+              "RelativeDocumentMoniker": "Quizi.Web\\Models\\Authentication\\User.cs",
+              "ToolTip": "D:\\Quizi\\Quizi.Web\\Models\\Authentication\\User.cs",
+              "RelativeToolTip": "Quizi.Web\\Models\\Authentication\\User.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAzwA4AAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-15T15:19:42.54Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
     }
   ]
 }
